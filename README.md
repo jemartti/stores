@@ -2,15 +2,15 @@ Stores is a modern, opinionated persistence layer built on the latest in javascr
 it provides an easy-to-use opensource persistence layer alternative to mongo.
 
 It's opinions are:
-1.  Most data should be key value pair as this is shard friendly.
-2.  The key should be a nice long integer using something like simpleflake.  If no id is passed in your record it generates a nice simpleflake id for you.
-3.  It is built for postgres 9.4 only as it's backend, because we love all the awesome jsonb stuff that postgres provides.
-4.  It is built with redis as a caching layer on top of it, because you should always cache.
-5.  Most queries should come from the cache... but sometimes you have to do queries against the db, so it provides methods for both.
-6.  Generators and co so your persistence calls aren't callback hell land.
-7.  Migrations are correlated to persistence, and migrations should live in a single file so your DDL is not spread across bazillions of timestamped files.
+1.  Most data should be key value pair as this is shard friendly.  
+2.  The key should be a nice long integer using something like simpleflake.  If no id is passed in your record it generates a nice simpleflake id for you.  
+3.  It is built for postgres 9.4 only as it's backend, because we love all the awesome jsonb stuff that postgres provides.  
+4.  It is built with redis as a caching layer on top of it, because you should always cache.  
+5.  Most queries should come from the cache... but sometimes you have to do queries against the db, so it provides methods for both.  
+6.  Generators and co so your persistence calls aren't callback hell land.  
+7.  Migrations are correlated to persistence, and migrations should live in a single file so your DDL is not spread across bazillions of timestamped files.  
 
-It has a strict dependency on co and postgres 9.4 and up.
+It has a strict dependency on co and postgres 9.4 and up.  This sets up persistence with redis fronted postgresql 9.4 backend.
 
 ```
 npm install stores
@@ -40,8 +40,6 @@ Redis config:
   opts: {a bunch of normal redis options you can use}
 };
 ```
-
-This sets up persistence with redis fronted postgresql 9.4 backend.
 
 To query:
 ```
