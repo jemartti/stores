@@ -1,7 +1,7 @@
 Stores is a modern, opinionated persistence layer built on the latest in javascript - generators - and the latest jsonb functionality in postgresql.  Using redis and postgres's new jsonb functionality available in 9.4,
 it provides an easy-to-use opensource persistence layer alternative to mongo.
 
-It's opinions are:
+It's opinions are:  
 1.  Most data should be key value pair as this is shard friendly.  
 2.  The key should be a nice long integer using something like simpleflake.  If no id is passed in your record it generates a nice simpleflake id for you.  
 3.  It is built for postgres 9.4 only as it's backend, because we love all the awesome jsonb stuff that postgres provides.  
