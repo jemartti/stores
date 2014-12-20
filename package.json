@@ -13,8 +13,8 @@
   },
   "homepage": "",
   "license": "MIT",
-  "main": "stores.js",
-  "name": "stores",
+  "main": "index.js",
+  "name": "node-stores",
   "repository": {
     "type": "git",
     "url": ""

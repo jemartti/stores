@@ -16,11 +16,11 @@ It's opinions are:
 It has a strict dependencies on co and postgres 9.4.
 
 ```
-npm install stores
+npm install node-stores
 ```
 
 ```
-var Store = require('Store').Store;
+var Store = require('node-stores').Store;
 var store = new Store(db, redis, opts);
 ```
 
