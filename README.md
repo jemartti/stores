@@ -1,26 +1,30 @@
 Stores is a modern, opinionated persistence layer built on the latest in javascript - generators - and the latest jsonb functionality in postgresql.  Using redis and postgres's new jsonb functionality available in 9.4,
 it provides an easy-to-use opensource persistence layer alternative to mongo.
 
-It's opinions are:  
-1.  Most data should be key value pair as this is shard friendly.  
-2.  The key should be a nice long integer using something like simpleflake.  If no id is passed in your record it generates a nice simpleflake id for you.  
-3.  It is built for postgres 9.4 only as it's backend, because we love all the awesome jsonb stuff that postgres provides.  
-4.  It is built with redis as a caching layer on top of it, because you should always cache.  
-5.  Most queries should come from the cache... but sometimes you have to do queries against the db, so it provides methods for both.  
-6.  Generators and co so your persistence calls aren't callback hell land.  
-7.  Migrations are correlated to persistence, and migrations should live in a single file so your DDL is not spread across bazillions of timestamped files.  
+Migrations is included, using an all-in-one migrations system, that allows you to keep your DDL in a single file for easy visibility.
 
-It has a strict dependency on co and postgres 9.4 and up.  This sets up persistence with redis fronted postgresql 9.4 backend.
+Shards is included, and currently includes a basic modulo sharding strategy.
+
+It's opinions are:  
+1.  Most data should be key value pair as this is shard friendly.  If you want to use the Store functions, your table must have the structure of id, value where value is a jsonb document.  See the migration below with an example DDL of this table structure.
+2.  The key should be a nice long integer using something like simpleflake.  If no id is passed in your record it generates a nice simpleflake id for you.  Because javascript doesn't support 64-bit ints, you have to pass the id as a string into Store.  It has a hard assert on this.
+3.  It is built for postgres 9.4 only as it's backend, because we love all the awesome jsonb stuff that postgres provides.  
+4.  It is built with redis as a caching layer on top of it, because you should always cache.  You can disable the cache using options.
+5.  Most queries should come from the cache... but sometimes you have to do queries against the db, so it provides methods for both.
+6.  Generators and co so your persistence calls aren't callback hell land.
+
+It has a strict dependencies on co and postgres 9.4.
 
 ```
 npm install stores
 ```
 
 ```
-var store = require('Store')(db, redis);
+var Store = require('Store').Store;
+var store = new Store(db, redis, opts);
 ```
 
-Database config
+db, redis, opts config examples:
 ```
 {
   host: 'localhost',
@@ -40,6 +44,13 @@ Redis config:
   opts: {a bunch of normal redis options you can use}
 };
 ```
+
+Opts config:
+```
+{
+    cache: true, // controls if redis is used as for caching
+    transaction: true // wraps the query in a transaction if true
+}
 
 To query:
 ```
@@ -93,4 +104,36 @@ to delete:
 ```
 // id is the nice long id string we have been using
 store.delete('testytable', '432234324324');
+```
+
+### Shards
+Shards sets up a very basic modulo based sharding strategy for your databases.  It shards based on the id of the record.
+```
+var Shards = require('store').Shards;
+var shards = new Shards([{
+      db: db,  // same as Store db
+      redis: redis, // same as Store redis
+      opts: opts, // same as Store opts
+      id: id  // this is the id that you want to this server to handle, e.g. 0 for all modulo 0 records
+    }]);
+var store = shards.mod('432343243432'); /// where the long number is the id
+store.insert(table, record);
+```
+
+### Migrations
+Migrations lets you run migrations on your database.
+```
+var migrations = require('migrations');
+
+migrationsList = [{
+    name: 'test',
+    type: 'db',
+    migration: 'CREATE TABLE IF NOT EXISTS test ( \
+        id bigint PRIMARY KEY, \
+        value jsonb \
+        );\
+        CREATE INDEX test_value_idx ON test USING gin (value jsonb_path_ops);'
+}];
+
+migrations.runMigrations(migrationsList, db); // db is same config as Store db
 ```
