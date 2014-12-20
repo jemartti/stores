@@ -1,5 +1,5 @@
 module.exports = {
   Store: require('./lib/store'),
-  noshare: require('./lib/noshare'),
+  Shards: require('./lib/shards'),
   migrations: require('./lib/migrations')
 };

@@ -1,6 +1,8 @@
 require('co-mocha');
 var assert = require('assert');
 var Store = require('../lib/store');
+var Shards = require('../lib/shards');
+var utils = require('../lib/utils');
 var util = require('util');
 
 var db = {
@@ -32,6 +34,11 @@ var migrations = [{
 describe('check stores', function () {
 
     var store = new Store(db, redis, {cache: true, transaction: true});
+    var shards = new Shards([{
+        db: db,
+        redis: redis,
+        id: 0
+    }]);
 
     before(function * () {
         yield m.runMigrations(migrations, db);
@@ -139,6 +146,13 @@ describe('check stores', function () {
         assert(found[0].value);
         assert(found[0].value.id === record.id);
         assert(found[0].value.message === 'test');
+    });
+
+    it('returns a shard', function * () {
+        var id = utils.generateNumber();
+        var store = shards.mod(id);
+        assert(store);
+        yield store.insert('test', {message: 'test'});
     });
 
 });
