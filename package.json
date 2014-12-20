@@ -1,28 +1,30 @@
 {
-  "author": "dpmorel",
-  "dependencies": {
-    "co": "^4.0.2",
-    "co-pg": "^1.3.1",
-    "co-redis": "^1.1.0",
-    "pg": "^4.1.1",
-    "redis": "^0.12.1",
-    "simpleflake": "^0.1.3"
-  },
-  "engines": {
-    "node": "~0.11.14"
-  },
-  "homepage": "",
-  "license": "MIT",
-  "main": "index.js",
-  "name": "node-stores",
-  "repository": {
-    "type": "git",
-    "url": ""
-  },
-  "version": "0.0.2",
-  "devDependencies": {
-    "co-mocha": "^1.1.0",
-    "mocha": "^2.0.1",
-    "should": "^4.4.1"
-  }
+    "name": "node-stores",
+    "author": "Dan Morel <dan@byte.co>",
+    "version": "0.0.3",
+    "keywords": ["node-stores", "postgres", "postgresql", "dal", "stores", "persistence", "postgres 9.4", "store"],
+    "homepage": "https://github.com/onehq/stores",
+    "repository": "git@github.com:onehq/stores.git",
+    "license": "MIT",
+
+    "main": "index.js",
+    "scripts": {
+        "test": "mocha --harmony-generators --reporter spec"
+    },
+    "dependencies": {
+        "co": "^4.0.2",
+        "co-pg": "^1.3.1",
+        "co-redis": "^1.1.0",
+        "pg": "^4.1.1",
+        "redis": "^0.12.1",
+        "simpleflake": "^0.1.3"
+    },
+    "engines": {
+        "node": "~0.11.14"
+    },
+    "devDependencies": {
+        "co-mocha": "^1.1.0",
+        "mocha": "^2.0.1",
+        "should": "^4.4.1"
+    }
 }
