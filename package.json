@@ -1,0 +1,28 @@
+{
+  "author": "dpmorel",
+  "dependencies": {
+    "co": "^4.0.2",
+    "co-pg": "^1.3.1",
+    "co-redis": "^1.1.0",
+    "pg": "^4.1.1",
+    "redis": "^0.12.1",
+    "simpleflake": "^0.1.3"
+  },
+  "engines": {
+    "node": "~0.11.14"
+  },
+  "homepage": "",
+  "license": "MIT",
+  "main": "stores.js",
+  "name": "stores",
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "version": "0.0.1",
+  "devDependencies": {
+    "co-mocha": "^1.1.0",
+    "mocha": "^2.0.1",
+    "should": "^4.4.1"
+  }
+}
